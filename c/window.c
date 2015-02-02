@@ -260,6 +260,10 @@ void startbutton(void){//Starting button.
 
 
 void update(void){//update screen
+	if (status == NO_BUTTON ||( status != UP && status != DOWN)){//if thereis no button to draw
+		SDL_RenderPresent(renderer);//update screen
+		return;//end of function
+	}
 	SDL_Rect dest;//rectangle for button
 	dest.w = buttonsize;
 	dest.h = buttonsize;

@@ -14,6 +14,7 @@
 
 #define DOWN 1
 #define UP 0
+#define NO_BUTTON -1
 
 
 #define RESOURCES "resources/" //resources folder path
