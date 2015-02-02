@@ -136,10 +136,10 @@ void push(int x, int y){//check if pressed button or not and call button() if pr
 		update();
 		while (SDL_WaitEventTimeout(&e, 500) != 0){//wait until button goes up or 1/2 second passes without an event
 			if (e.type == SDL_MOUSEBUTTONUP){//if button went up
-				status = UP;//button up
 				break;//break out of loop
 			}
 		}
+		status = UP;//button up
 		update();
 		(*button)();//call button function
 	}
