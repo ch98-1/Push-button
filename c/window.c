@@ -176,7 +176,8 @@ unsigned int gettexture(const char *img){//make texture from image source in res
 		texturessize += sizeof(SDL_Texture*);//update texturesize
 		char file[256] = RESOURCES;//folder path
 		strcat(file, img);//append path
-		SDL_Surface *Surface = SDL_LoadBMP(file);
+		SDL_Surface *Surface;
+		Surface = SDL_LoadBMP(file);
 		if (Surface == NULL){//if surface is empty
 			printf("error: %s \n", file, SDL_GetError());//print error message
 			return 0;//return 0 for a error
@@ -188,7 +189,7 @@ unsigned int gettexture(const char *img){//make texture from image source in res
 		if (textures == NULL){//if it becomes null
 			printf("could not allocate new memory for textures\n");//print out error if it happens
 		}
-		textures[texturessize / sizeof(SDL_Texture*)-1] = SDL_CreateTextureFromSurface(renderer, Surface);//make texture
+		textures[texturessize / sizeof(SDL_Texture*)-1] = Texture;//make texture
 		return texturessize / sizeof(SDL_Texture*)-1;//button adress
 	}
 	//do nothing if out of limit

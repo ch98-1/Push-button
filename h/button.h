@@ -8,6 +8,6 @@ void button1(void);//first button function
 
 void button2(void);//second buton function
 
-
+void Pointless(void);//pointless button
 
 #endif

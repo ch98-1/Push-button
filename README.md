@@ -1,3 +1,8 @@
 # Push-button
-Push-button that does stuff. Graphics and sound using SDL2.
-Move resources folder to running directory.
+Push-button that does stuff. Graphics and sound using SDL2.  
+Move resources folder to running directory.  
+  
+
+Todo:
+Add more buttons  
+Add sounds  
