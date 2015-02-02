@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
 		SDL_WINDOW_FULLSCREEN | SDL_WINDOW_RESIZABLE			// fullscreen window
 		);
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); //create Renderer
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE); //create Renderer. Buggy if hardware accelerated.
 
 
 	
@@ -42,6 +42,8 @@ int main(int argc, char *argv[]){
 	
 	buttonssize = sizeof(buttonfunction);//set current buttonsize
 	texturessize = sizeof(SDL_Texture*);//set current texturesize
+
+	gettexture("button_down.bmp");//second default texture
 
 	inittextures();//initialise textures
 	initbuttons();//initialise buttons
@@ -60,6 +62,7 @@ int main(int argc, char *argv[]){
 	if (textures == NULL){//if it becomes null
 		printf("could not allocate new memory for textures\n");//print out error if it happens
 	}
+
 
 
 
@@ -129,6 +132,15 @@ int EventFilter(void* userdata, SDL_Event* e){//event filter
 
 void push(int x, int y){//check if pressed button or not and call button() if pressed.
 	if (sqrt((x - display.w / 2)*(x - display.w / 2) + (y - display.h / 2)*(y - display.h / 2)) < buttonsize / 2){//if you pressed on button
+		status = DOWN;//button down
+		update();
+		while (SDL_WaitEventTimeout(&e, 500) != 0){//wait until button goes up or 1/2 second passes without an event
+			if (e.type == SDL_MOUSEBUTTONUP){//if button went up
+				status = UP;//button up
+				break;//break out of loop
+			}
+		}
+		update();
 		(*button)();//call button function
 	}
 	//button was not pressed
@@ -244,4 +256,15 @@ void startbutton(void){//Starting button.
 	setnext(rand()%buttonssize/sizeof(buttonfunction));//set new button function to any of possible buttons
 
 
+}
+
+
+void update(void){//update screen
+	SDL_Rect dest;//rectangle for button
+	dest.w = buttonsize;
+	dest.h = buttonsize;
+	dest.x = display.w / 2 - buttonsize / 2;//center
+	dest.y = display.h / 2 - buttonsize / 2;//center;
+	SDL_RenderCopy(renderer, textures[status], NULL, &dest);//draw button
+	SDL_RenderPresent(renderer);//update screen
 }

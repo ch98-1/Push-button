@@ -12,7 +12,13 @@
 #define MAX_BUTTONS 1024 //maximum number of buttons
 #define MAX_TEXTURES 1024 //maximum number of textures
 
+#define DOWN 1
+#define UP 0
+
+
 #define RESOURCES "resources/" //resources folder path
+
+int status;//if button is up or down
 
 int EventFilter(void* userdata, SDL_Event* e);//event filtering 
 
@@ -49,5 +55,7 @@ void initbuttons(void);//run at start. use to set buttons
 void quit(void);//quit everything
 
 void destroytextures(void);//destroy all textures in list
+
+void update(void);//updata screen
 
 #endif
