@@ -7,9 +7,10 @@ void inittextures(void){ //initialise textures
 
 
 void initbuttons(void){//initialise buttons
-	setbutton(&button1);
-	setbutton(&button2);
-	setbutton(&Pointless);
+	b1 = setbutton(&button1);//button1 and 2
+	b2 = setbutton(&button2);
+	pl = setbutton(&Pointless);//pointless button that says pointless button
+	bh = setbutton(&black_hole);//black hole
 }
 
 
@@ -35,11 +36,11 @@ void button1(void){//button 1.
 	update();//update and render screen
 
 
-	if (rand() % 5 == 0){
-		setnext(3);
+	if (rand() % 5 == 0){//set to pointless button at 1/5 chance
+		setnext(pl);
 	}
 	else{
-		setnext(2);
+		setnext(b2);
 	}
 
 
@@ -68,11 +69,11 @@ void button2(void){//button2 was pressed
 
 	update();//update and render screen
 
-	if (rand() % 5 == 0){
-		setnext(3);
+	if (rand() % 5 == 0){//set to pointless button at 1/5 chances
+		setnext(pl);
 	}
 	else{
-		setnext(1);
+		setnext(b1);
 	}
 
 	//end of test
@@ -100,13 +101,44 @@ void Pointless(void){//pointless button
 		update();//update and render screen
 
 		srand((unsigned int)(clock() + SDL_GetTicks()));//seed random number generator
-		if (rand() % 50 == 0){//one in 50 changce of escaping the loop by breaking the button
-			setnext(rand() % buttonssize / sizeof(buttonfunction));//set new button function to any of possible buttons
+		if (rand() % POINTLESS_ESCAPE_CHANCE == 0){//one in 50 changce of escaping the loop by breaking the button
+			setnext(bh);//set new button function to black hole button
 		}
 		else{
-			setnext(3);//this button
+			setnext(pl);//this button
 		}
 		
 
 
+}
+
+	
+
+
+
+void black_hole(void){//black hole button
+	status = NO_BUTTON;//don't draw button as is
+	int i;//counter
+	SDL_Rect rect;//rect the size of screen
+	rect.h = display.h;
+	rect.w = display.w;
+	rect.x = 0;
+	rect.y = 0;
+	for (i = 0; i < 64; i++){//spin 360 degrees. Darken screen each frame
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 16);//set sendering color to white
+		SDL_RenderFillRect(renderer, &rect);//draw rectangle
+		update();//update screen
+		SDL_Delay(3);//wait 3 milliseconds
 	}
+	for (i = 0; i < 32; i++){//spin 360 degrees. Darken screen each frame
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 32);//set sendering color to white
+		SDL_RenderFillRect(renderer, &rect);//draw rectangle
+		update();//update screen
+		SDL_Delay(1);//wait 1 milliseconds
+	}
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);//set rendering color to white
+	SDL_RenderClear(renderer);//clear screen
+	status = UP;//start drawing button
+	update();//update screen
+	setnext(0);//starting button
+}

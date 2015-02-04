@@ -34,6 +34,7 @@ int main(int argc, char *argv[]){
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE); //create Renderer. Buggy if hardware accelerated.
 
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);//enable alpha
 
 	
 
