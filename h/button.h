@@ -5,7 +5,7 @@
 #include "main.h" //main functions and data
 
 
-#define POINTLESS_ESCAPE_CHANCE 5 //chance of escaping pointless button loop
+#define POINTLESS_ESCAPE_CHANCE 50 //chance of escaping pointless button loop
 
 
 

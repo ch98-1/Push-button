@@ -140,5 +140,5 @@ void black_hole(void){//black hole button
 	SDL_RenderClear(renderer);//clear screen
 	status = UP;//start drawing button
 	update();//update screen
-	setnext(0);//starting button
+	(*buttons[0])(0);//run starting button
 }
